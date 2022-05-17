@@ -14,7 +14,7 @@ class DatabaseSetup
 
     public void CreateComputerTable()
     {
-        var connection =  new SqliteConnection("Data Source=database_test.db");
+        var connection =  new SqliteConnection(databaseConfig.ConnectionString);
         connection.Open();
 
         var command = connection.CreateCommand();
