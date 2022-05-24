@@ -8,6 +8,7 @@ var databaseConfig = new DatabaseConfig();
 var databaseSetup = new DatabaseSetup(databaseConfig);
 
 var computerRepository = new ComputerRepository(databaseConfig);
+var labRepository = new LabRepository(databaseConfig);
 
 //routing
 var modelName = args[0];
@@ -38,42 +39,17 @@ if(modelName == "Lab")
 {
     if(modelAction == "List")
     {
-        var connection =  new SqliteConnection("Data Source=database_test.db");
-        connection.Open();
-        var command = connection.CreateCommand();
-        command.CommandText = "SELECT * FROM Labs";
-
-        var reader = command.ExecuteReader();
-
         Console.WriteLine("Lab List");
-        while(reader.Read())
+        foreach (var lab in labRepository.GetAll())
         {
-            Console.WriteLine(
-                "{0}, {1}, {2}, {3}", reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), reader.GetString(3));
-        }
+            var message = $"{lab.Id}, {lab.Number}, {lab.Name}, {lab.Block}";
 
-        reader.Close();
-        connection.Close();
+            Console.WriteLine(message);
+        }
     }
 }
 
 if(modelAction == "New")
 {
-    var connection =  new SqliteConnection("Data Source=database_test.db");
-    connection.Open();
-
-    int id = Convert.ToInt32(args[2]);
-    int numero = Convert.ToInt32(args[3]);
-    string nome = args[4];
-    string bloco = args[5];
-
-    var command = connection.CreateCommand();
-    command.CommandText = "INSERT INTO Computers VALUES($id, $number, $name, $block)";
-    command.Parameters.AddWithValue("$id", id);
-    command.Parameters.AddWithValue("$number", numero);
-    command.Parameters.AddWithValue("$name", nome);
-    command.Parameters.AddWithValue("$block", bloco);
-
-    command.ExecuteNonQuery();
-    connection.Close();
+    
 }
