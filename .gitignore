@@ -1,3 +1,4 @@
 bin
 obj
 .vscode
+database_test.db
