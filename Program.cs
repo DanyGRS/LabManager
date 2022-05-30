@@ -1,4 +1,4 @@
-﻿using LabManager.Database;
+using LabManager.Database;
 using LabManager.Models;
 using LabManager.Repositories;
 using Microsoft.Data.Sqlite;
@@ -36,16 +36,17 @@ if(modelAction == "New")
 
 if(modelAction == "Delete")
 {
+
     int id = Convert.ToInt32(args[2]);
 
     computerRepository.Delete(id);
     
 }
 
+
 if(modelAction == "Show")
 {
     int id = Convert.ToInt32(args[2]);
 
-    var computer = computerRepository.GetById(id);
-} 
-
+    var computer = computerRepository.GetById(id);     
+}
