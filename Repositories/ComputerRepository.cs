@@ -50,6 +50,19 @@ class ComputerRepository
         return computer;
     }
 
+    public void Delete(int id)
+    {
+        var connection =  new SqliteConnection(databaseConfig.ConnectionString);
+        connection.Open();
+        
+        var command = connection.CreateCommand();
+        command.CommandText = "DELETE FROM Computers WHERE Id = $id;";
+        command.Parameters.AddWithValue("$id", id);
+
+        command.ExecuteNonQuery();
+        connection.Close();
+    }
+
     public Computer GetById(int id)
     {
         var connection =  new SqliteConnection(databaseConfig.ConnectionString);
@@ -68,18 +81,5 @@ class ComputerRepository
         connection.Close();
 
         return computer;
-    }
-
-    public void Delete(int id)
-    {
-        var connection =  new SqliteConnection(databaseConfig.ConnectionString);
-        connection.Open();
-        
-        var command = connection.CreateCommand();
-        command.CommandText = "DELETE FROM Computers WHERE Id = $id;";
-        command.Parameters.AddWithValue("$id", id);
-
-        command.ExecuteNonQuery();
-        connection.Close();
     }
 }
