@@ -62,4 +62,25 @@ class ComputerRepository
         command.ExecuteNonQuery();
         connection.Close();
     }
+
+
+    public Computer GetById(int id)
+    {
+        var connection =  new SqliteConnection(databaseConfig.ConnectionString);
+        connection.Open();
+
+        var command = connection.CreateCommand();
+        command.CommandText = "SELECT * FROM Computers WHERE Id = $id;";
+        command.Parameters.AddWithValue("$id", id);
+
+        
+        var reader = command.ExecuteReader();
+        reader.Read();
+        var computer = new Computer(reader.GetInt32(0),reader.GetString(1),reader.GetString(2));
+        Console.WriteLine("{0},{1},{2}", computer.Id, computer.Ram, computer.Processor);
+
+        connection.Close();
+
+        return computer;
+    }
 }
