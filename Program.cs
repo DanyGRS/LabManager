@@ -48,5 +48,14 @@ if(modelAction == "Show")
 {
     int id = Convert.ToInt32(args[2]);
 
-    var computer = computerRepository.GetById(id);     
+    var computer = computerRepository.GetById(id);
+} 
+if(modelAction == "Update")
+{
+    int id = Convert.ToInt32(args[2]);
+    string ram = args[3];
+    string processador = args[4];
+
+    var computer = new Computer(id, ram, processador);
+    computerRepository.Update(computer);   
 }
