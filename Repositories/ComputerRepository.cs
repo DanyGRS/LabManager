@@ -63,6 +63,7 @@ class ComputerRepository
         connection.Close();
     }
 
+
     public Computer GetById(int id)
     {
         var connection =  new SqliteConnection(databaseConfig.ConnectionString);
