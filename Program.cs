@@ -2,6 +2,7 @@ using LabManager.Database;
 using LabManager.Models;
 using LabManager.Repositories;
 using Microsoft.Data.Sqlite;
+using Dapper;
 
     
 var databaseConfig = new DatabaseConfig();
@@ -17,7 +18,7 @@ if(modelName == "Computer")
 {
     if(modelAction == "List")
     {
-        foreach (var computer in computerRepository.GetAll())
+        foreach(var computer in computerRepository.GetAll())
         {
             Console.WriteLine("{0}, {1}, {2}", computer.Id, computer.Ram, computer.Processor);
         }
@@ -30,8 +31,15 @@ if(modelAction == "New")
     string ram = args[3];
     string processador = args[4];
 
-    var computer = new Computer(id,  ram, processador); 
-    computerRepository.Save(computer);
+    if(computerRepository.existsById(id))
+    {
+        Console.WriteLine($"Computador com id {id} já existe");
+    }
+    else 
+    {
+        var computer = new Computer(id,  ram, processador); 
+        computerRepository.Save(computer);
+    }  
 }
 
 if(modelAction == "Delete")
